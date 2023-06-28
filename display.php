@@ -21,7 +21,8 @@ if(isset($_SESSION['logined'])){
   <body>
 
 <!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<?php include('header.php');?>
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">My Web</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -39,7 +40,7 @@ if(isset($_SESSION['logined'])){
       <a class="nav-link" href="#exampleModalLong" data-toggle="modal" data-target="#exampleModalLong">Logout</a>
       </li>
   </div>
-</nav>
+</nav> -->
 
 <div class="container-fluid text-center">
 
@@ -61,17 +62,16 @@ if(isset($_SESSION['logined'])){
     <tbody>
     <?php while($details=mysqli_fetch_array($data)) { ?>
     <tr scope="row">
-    <td><img src='<?php echo $details['profile_image'];?>' height='80px' width='80px'></td>
+    <td><img src='images/<?php echo $details['profile_image'];?>' height='80px' width='80px'></td>
     <td><?php echo $details['name'];?></td>
     <td><?php echo $details['email'];?></td>
     <td><?php echo $details['address'];?></td>
     <td><?php echo $details['phone'];?></td>
     
     <td><button class='btn btn-success btn-lg shadow-sm text-white'>
-    <a href='update.php?id=<?php echo $details['id'] ?>'>Update</a></button></td>
+    <a href='update.php?id=<?php echo $details['id'] ?>' class="modal-button">Update</a></button></td>
     </tr>
 
-  <?php } }?>
   </tbody>
   </table>
   
@@ -101,3 +101,4 @@ if(isset($_SESSION['logined'])){
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
   </body>
   </html>
+  <?php } }?>

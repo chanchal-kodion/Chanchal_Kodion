@@ -1,7 +1,26 @@
-<?php
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+    <title>Registeration Form</title>
+</head>
+
+<body>
+
+    <?php
 session_start();
 if(isset($_SESSION['logined'])){
-header('location:display.php');
+  header('location:alldata.php');
 }
 
 include ('config.php');
@@ -111,21 +130,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tempname=$_FILES['uploadfile']['tmp_name'];
     $folder="images/".$names;
     move_uploaded_file($tempname,$folder);
-        $sql_inst ="INSERT INTO `register` (`profile_image`,`name`,`email`,`address`,`phone`,`password`)VALUES ('$folder','$name','$email','$address','$phone',md5('$password'))";
+        $sql_inst ="INSERT INTO `register` (`profile_image`,`name`,`email`,`address`,`phone`,`password`)VALUES ('$names','$name','$email','$address','$phone',md5('$password'))";
         $run = mysqli_query($conn,$sql_inst);
 
         if(!$run)
         {
-            echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Regisration Failed');
-                window.location.href='register-form.php';
-                </script>");
+        
+            // <!-- <head> -->
+            // <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script> -->
+            // <!-- </head> -->
+            // <!-- <body> -->
+                
+
+            echo "<script>";
+            echo " Swal.fire({
+                icon: 'success',
+                title: 'Error',
+                text: 'Registration Unsuccessful!',
+                showConfirmButton: false,
+                timer: 2500
+              }).then(() => {
+                window.location.href = 'register-form.php';
+              })";
+
+              echo "</script>";
+            // header('location:register-form.php');
+        
         }
         else{
-          echo ("<script LANGUAGE='JavaScript'>
-          window.alert('Registered Successfully');
-          window.location.href='login-form.php';
-          </script>");
+            
+            // <!-- <head>
+            // <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+            // </head>
+            // <body> -->
+                
+ 
+            echo "<script>";
+            echo " Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Registration successful!',
+                showConfirmButton: false,
+                timer: 2500
+              }).then(() => {
+                window.location.href = 'login-form.php';
+              })";
+
+              echo "</script>";
         }
   }
 }
@@ -136,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-<!doctype html>
+    <!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -145,112 +196,128 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
     <title>Registeration Form</title>
   </head>
-  <body>       
-<section class="vh-100 bg-image">
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card formmargin" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+  <body>        -->
+    <section class="vh-100 bg-image">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card formmargin" style="border-radius: 15px;">
+                            <div class="card-body p-5">
+                                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-              <form action="" method="POST" enctype="multipart/form-data">
+                                <form action="" method="POST" enctype="multipart/form-data">
 
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example1cg">Your Name</label>
-                  <input type="text" id="form3Example1cg"class="form-control form-control-lg" value="<?php echo $name; ?>" name="name" required/>
-                  <span class="error"><?php echo $nameErr; ?></span>
-                </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example1cg">Your Name</label>
+                                        <input type="text" id="form3Example1cg" class="form-control form-control-lg"
+                                            value="<?php echo $name; ?>" name="name" required />
+                                        <span class="error"><?php echo $nameErr; ?></span>
+                                    </div>
 
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example1cg">Profile Image</label>
-                <input type="file" name="uploadfile"id="form3Example1cg"class="form-control form-control-lg" value="" required/>
-                <span class="error"><?php echo $fileErr; ?></span>  
-              </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example1cg">Profile Image</label>
+                                        <input type="file" name="uploadfile" id="form3Example1cg"
+                                            class="form-control form-control-lg" value="" required />
+                                        <span class="error"><?php echo $fileErr; ?></span>
+                                    </div>
 
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example3cg">Your Email</label>
-                  <input type="text" id="form3Example3cg" class="form-control form-control-lg"  value="<?php echo $email; ?>" name="email" required/>
-                  <span class="error"><?php echo $emailErr; ?></span>
-                </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example3cg">Your Email</label>
+                                        <input type="text" id="form3Example3cg" class="form-control form-control-lg"
+                                            value="<?php echo $email; ?>" name="email" required />
+                                        <span class="error"><?php echo $emailErr; ?></span>
+                                    </div>
 
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example4cdg">Address</label>
-                  <input type="text" id="form3Example4cdg" class="form-control form-control-lg" value="<?php echo $address; ?>" name="address" required/>
-                  <span class="error"><?php echo $addressErr; ?></span>
-                </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example4cdg">Address</label>
+                                        <input type="text" id="form3Example4cdg" class="form-control form-control-lg"
+                                            value="<?php echo $address; ?>" name="address" required />
+                                        <span class="error"><?php echo $addressErr; ?></span>
+                                    </div>
 
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example4cdg">Phone Number</label>
-                  <input type="text" id="form3Example4cdg" class="form-control form-control-lg" value="<?php echo $phone; ?>" name="phone" required maxlength=10/>
-                  <span class="error"><?php echo $phoneErr; ?></span>
-                </div>
-                         
-                <label for="exampleInputEmail1">Password</label>
-                <div class="input-group">
-                  <input type="password" class="form-control" name="pass" id="myInput" value="<?php echo $password; ?>" required >
-                  <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" onclick="myFunction()"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                  </div>
-                </div>
-                <div class="row">
-                  <span class="error"><?php echo $passwordErr; ?></span> 
-                </div>
-                <br>
-    
-                <label for="exampleInputEmail1">Confirm Password</label>
-                <div class="input-group">
-                <input type="password" class="form-control" name="cpass" id="myInput1" name="cpass" value="<?php echo $confirmPassword; ?>" required maxlength="32">
-                <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" onclick="myFunction1()"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                </div>
-                </div>
-                <div class="row">
-                <span class="error"><?php echo $confirmPasswordErr; ?></span> 
-                </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example4cdg">Phone Number</label>
+                                        <input type="text" id="form3Example4cdg" class="form-control form-control-lg"
+                                            value="<?php echo $phone; ?>" name="phone" required maxlength=10 />
+                                        <span class="error"><?php echo $phoneErr; ?></span>
+                                    </div>
 
-                <br>
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" name="pass" id="myInput"
+                                            value="<?php echo $password; ?>" required>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-secondary" type="button" onclick="myFunction()"><i
+                                                    class="fa fa-eye" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span class="error"><?php echo $passwordErr; ?></span>
+                                    </div>
+                                    <br>
 
-                <div class="d-flex justify-content-center">
-                  <button type="submit" name="submit" class="btn btn-success btn-block btn-lg">Register</button>
+                                    <label for="exampleInputEmail1">Confirm Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" name="cpass" id="myInput1"
+                                            name="cpass" value="<?php echo $confirmPassword; ?>" required
+                                            maxlength="32">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-secondary" type="button" onclick="myFunction1()"><i
+                                                    class="fa fa-eye" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span class="error"><?php echo $confirmPasswordErr; ?></span>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" name="submit"
+                                            class="btn btn-success btn-block btn-lg">Register</button>
+                                    </div>
+
+                                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a
+                                            href="login-form.php" class="fw-bold text-body"><u>Login here</u></a></p>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="login-form.php"
-                    class="fw-bold text-body"><u>Login here</u></a></p>
-
-              </form>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+    </script>
 </body>
+
 </html>
 
 <script>
 function myFunction() {
-  var x = document.getElementById("myInput");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
+    var x = document.getElementById("myInput");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
 }
 
 function myFunction1() {
-  var x = document.getElementById("myInput1");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
+    var x = document.getElementById("myInput1");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
 }
-
 </script>
