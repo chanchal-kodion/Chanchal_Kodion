@@ -14,19 +14,20 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Login Form</title>
+    <title>Recover Account</title>
 </head>
 
 <body>
 
 
     <?php
-session_start();
+    // error_reporting(0);
+// session_start();
 include ('config.php');
-if(isset($_SESSION['logined'])){
-    header('location:alldata.php');
-}
-else{
+// if(isset($_SESSION['logined'])){
+    // header('location:alldata.php');
+// }ssss
+// else{
 // Define variables to store form data and error messages
 $email = $password ='';
 $emailErr =$passwordErr= '';
@@ -61,28 +62,36 @@ $emailErr =$passwordErr= '';
  
     if(empty($emailErr)&&empty($passwordErr)){
 
-    $sql="SELECT * FROM `register` WHERE `email`='$email' &&  `password`= md5('$password') && `status`='0'";
+    $sql="SELECT * FROM `register` WHERE `email`='$email' &&  `password`= md5('$password') && `status`='1'";
 
     $result = mysqli_query($conn,$sql);
     // print_r($result);
-    $session_id="";
-    foreach($result as $value){
-      // print_r($value['id']);
-      $session_id=$value['id'];
-    }
+    // $session_id="";
+    // foreach($result as $value){
+    // print_r($value['id']);
+    //   $session_id=$value['id'];
     $res=mysqli_num_rows($result);
+    // echo $res;
+    // die;
     if($res>0)
     {
-    $_SESSION['logined']=$session_id;
+    // $_SESSION['logined']=$session_id;
     // echo ("<script LANGUAGE='JavaScript'>
     // window.alert('Logined Successfully');
     // window.location.href='alldata.php';
     // </script>");
+    $recover_account= "UPDATE `register` SET `status` = 0 WHERE `email`=`$email`" ; 
+    $recover_account_query = mysqli_query($conn,$recover_account);
+    // $rest=mysqli_num_rows($recover_account_query);
+    $final=mysqli_fetch_array($recover_account_query);
+    print_r($final);
+    die;
+        if($rest){
     echo "<script>";
     echo " Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: 'Login successful!',
+        text: 'Recovered successfully!',
         showConfirmButton: false,
         timer: 2500
       }).then(() => {
@@ -90,28 +99,34 @@ $emailErr =$passwordErr= '';
       })";
 
       echo "</script>";
-
     }
-    else{
-        // $passwordErr= "please enter a valid email and password";
-        echo "<script>";
-        echo " Swal.fire({
-            icon: 'error',
-            title: 'Login',
-            text: 'Login Failed!',
-            showConfirmButton: false,
-            timer: 2500
-          }).then(() => {
-            window.location.href = 'login-form.php';
-          })";
-          echo "</script>";
+}
+    else 
+    {
+        $passwordErr="old password and email dont match";
     }
+    // else{
+    //     // $passwordErr= "please enter a valid email and password";
+    //     echo "<script>";
+    //     echo " Swal.fire({
+    //         icon: 'error',
+    //         title: 'Login',
+    //         text: 'Login Failed!',
+    //         showConfirmButton: false,
+    //         timer: 2500
+    //       }).then(() => {
+    //         window.location.href = 'login-form.php';
+    //       })";
+    //       echo "</script>";
+    // }
   }
 }
-}
+// }
+// }
 ?>
 
-    <!-- <!doctype html>
+
+<!-- <!doctype html>
 <html lang="en">
   <head>
  
@@ -122,10 +137,10 @@ $emailErr =$passwordErr= '';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
-    <title>Login Form</title>
+    <title>Recover Account</title>
   </head>
   <body> -->
-    <div class="container">
+  <div class="container">
         <div class="row justify-content-center custom-margin">
             <div class="col-md-4 col-sm-6 col-lg-6">
 

@@ -106,7 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } else {
     $confirmPassword = sanitizeInput($_POST['cpass']);
     // Check if confirm password matches the password
-
     if ($confirmPassword !== $password) {
       $confirmPasswordErr = 'Password and confirm password do not match';
     }
@@ -121,6 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if($count>0)
       {
       $emailErr="Email already exists";
+      echo "<a href='reactiveaccount.php' target='_blank'>Click here to recover account</a>";
       }
       else
       {

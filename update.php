@@ -13,8 +13,8 @@
 
 <body>
 
+<?php
 
-    <?php
 session_start();
 if(isset($_SESSION['logined'])){
 include ('config.php');
@@ -332,30 +332,6 @@ else
         </div>
     </section>
 
-    <!-- modal logout-->
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Do you really want to logout?
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success text-white" data-dismiss="modal"><a href="display.php"
-                            class="modal-button">No</a></button>
-                    <button type="button" class="btn btn-danger text-white"><a class="modal-button"
-                            href="logout.php">Yes</a></button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
