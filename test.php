@@ -129,14 +129,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $run = mysqli_query($conn,$sql_inst);
 
         if(!$run)
-        {
-        
+        {       
             // <!-- <head> -->
             // <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script> -->
             // <!-- </head> -->
             // <!-- <body> -->
-                
-
             echo "<script>";
             // echo "Swal.fire('Success', 'Registration successful!', 'success');"; 
 
@@ -154,14 +151,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // header('location:register-form.php');
         
         }
-        else{
-            
+        else{            
             // <!-- <head>
             // <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
             // </head>
-            // <body> -->
-                
- 
+            // <body> --> 
             echo "<script>";
             // echo "Swal.fire('Success', 'Registration successful!', 'success');"; 
 

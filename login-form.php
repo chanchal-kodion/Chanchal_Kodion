@@ -24,7 +24,7 @@
 session_start();
 include ('config.php');
 if(isset($_SESSION['logined'])){
-    header('location:alldata.php');
+    header('location:home_page.php');
 }
 else{
 // Define variables to store form data and error messages
@@ -74,10 +74,6 @@ $emailErr =$passwordErr= '';
     if($res>0)
     {
     $_SESSION['logined']=$session_id;
-    // echo ("<script LANGUAGE='JavaScript'>
-    // window.alert('Logined Successfully');
-    // window.location.href='alldata.php';
-    // </script>");
     echo "<script>";
     echo " Swal.fire({
         icon: 'success',
@@ -86,7 +82,7 @@ $emailErr =$passwordErr= '';
         showConfirmButton: false,
         timer: 2500
       }).then(() => {
-        window.location.href = 'alldata.php';
+        window.location.href = 'profile_page.php';
       })";
 
       echo "</script>";
@@ -111,20 +107,6 @@ $emailErr =$passwordErr= '';
 }
 ?>
 
-    <!-- <!doctype html>
-<html lang="en">
-  <head>
- 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
-    <title>Login Form</title>
-  </head>
-  <body> -->
     <div class="container">
         <div class="row justify-content-center custom-margin">
             <div class="col-md-4 col-sm-6 col-lg-6">

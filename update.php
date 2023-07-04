@@ -1,20 +1,4 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <title>update Form</title>
-</head>
-
-<body>
-
 <?php
-
 session_start();
 if(isset($_SESSION['logined'])){
 include ('config.php');
@@ -50,14 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 
-  // Validate file upload
-  // if (empty($_FILES['uploadfile']['name'])) {
-  //   $fileErr = 'File upload is required';
-  // } else {
-    // Perform file upload validations as per your requirements
-    // ...
-  // }
-
+  $allowedExtensions = ['jpeg', 'jpg', 'avif', 'png'];
+  $uploadedFile = $_FILES['uploadfile']['name']; // Assuming you are using a file upload form
+  $fileExtension = strtolower(pathinfo($uploadedFile, PATHINFO_EXTENSION));
+  
+  if (!in_array($fileExtension, $allowedExtensions)) {
+      // File extension is not allowed
+      $fileErr =  "Invalid file type. Only JPEG, AVIF, and PNG images are allowed.";
+      // You can choose to exit the script or take other appropriate action
+  }
   // Validate phone
   if (empty($_POST['phone'])) {
     $phoneErr = 'Phone number is required';
@@ -105,12 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   echo $res;
   if($res>0)
                 {
-          
-                  // echo ("<script LANGUAGE='JavaScript'>
-                  // window.alert('Data and image Succesfully Updated');
-                  // window.location.href='alldata.php';
-                  // </script>");
-
                   echo "<script>";
                   echo " Swal.fire({
                       icon: 'success',
@@ -119,9 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                       showConfirmButton: false,
                       timer: 2500
                     }).then(() => {
-                      window.location.href = 'alldata.php';
+                      window.location.href = 'home_page.php';
                     })";
-              
                     echo "</script>";
 
                 }
@@ -138,10 +116,6 @@ else
     $res=mysqli_query($conn,$sql);
     if($res>0)
                 {          
-                  // echo ("<script LANGUAGE='JavaScript'>
-                  // window.alert('Data Succesfully Updated');
-                  // window.location.href='alldata.php';
-                  // </script>");
                   echo "<script>";
                   echo " Swal.fire({
                       icon: 'success',
@@ -150,7 +124,7 @@ else
                       showConfirmButton: false,
                       timer: 2500
                     }).then(() => {
-                      window.location.href = 'alldata.php';
+                      window.location.href = 'home_page.php';
                     })";
               
                     echo "</script>";
@@ -172,8 +146,6 @@ else
       $count = mysqli_num_rows($run);
       $row= mysqli_fetch_assoc($run);
       $secondary_email=$row['email'];
-    //   echo $secondary_email;
-    //   die;
     if($count>0)
     {
       $emailErr= " Please try another email this email already exists";
@@ -191,13 +163,7 @@ else
       $res=mysqli_query($conn,$sql);
       echo $res;
       if($res>0)
-                    {
-              
-                      // echo ("<script LANGUAGE='JavaScript'>
-                      // window.alert('Data and image Succesfully Updated');
-                      // window.location.href='alldata.php';
-                      // </script>");
-    
+                    {    
                       echo "<script>";
                       echo " Swal.fire({
                           icon: 'success',
@@ -206,12 +172,10 @@ else
                           showConfirmButton: false,
                           timer: 2500
                         }).then(() => {
-                          window.location.href = 'alldata.php';
+                          window.location.href = 'home_page.php';
                         })";
-                  
                         echo "</script>";
-    
-                    }
+                        }
     else 
                 {
         echo "Unable to Update";
@@ -225,10 +189,6 @@ else
         $res=mysqli_query($conn,$sql);
         if($res>0)
                     {          
-                      // echo ("<script LANGUAGE='JavaScript'>
-                      // window.alert('Data Succesfully Updated');
-                      // window.location.href='alldata.php';
-                      // </script>");
                       echo "<script>";
                       echo " Swal.fire({
                           icon: 'success',
@@ -237,9 +197,8 @@ else
                           showConfirmButton: false,
                           timer: 2500
                         }).then(() => {
-                          window.location.href = 'alldata.php';
+                          window.location.href = 'home_page.php';
                         })";
-                  
                         echo "</script>";
                     }
     else 
@@ -260,87 +219,80 @@ else
 ?>
 
 
-    <!-- html -->
-    <section>
-        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-            <div class="container h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                        <div class="card formmargin" style="border-radius: 15px;">
-                            <div class="card-body p-5">
-                                <h2 class="text-uppercase text-center mb-5">Update your account</h2>
+<!-- html -->
+<section>
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card formmargin" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">Update your account</h2>
 
-                                <form action="" method="POST" enctype="multipart/form-data">
+                            <form action="" method="POST" enctype="multipart/form-data">
 
-                                    <div class="form-outline text-center">
-                                        <img src="images/<?php echo $details['profile_image'] ?>" height="200px" width="170px"
-                                          class="rounded-circle">
-                                    </div>
+                                <div class="form-outline text-center">
+                                    <img src="images/<?php echo $details['profile_image'] ?>" height="200px"
+                                        width="170px" class="rounded-circle">
+                                </div>
 
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example1cg">Your Name</label>
-                                        <input type="text" id="form3Example1cg" class="form-control form-control-lg"
-                                            name="name" value="<?php echo $details['name'] ?>" />
-                                        <span class="error"><?php echo $nameErr; ?></span>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example1cg">Your Name</label>
+                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg"
+                                        name="name" value="<?php echo $details['name'] ?>" />
+                                    <span class="error"><?php echo $nameErr; ?></span>
 
-                                    </div>
+                                </div>
 
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example1cg"
-                                            value="<?php echo $details['profile_image'] ?>">Profile Image</label>
-                                        <input type="file" name="uploadfile" id="form3Example1cg"
-                                            class="form-control form-control-lg">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example1cg"
+                                        value="<?php echo $details['profile_image'] ?>">Profile Image</label>
+                                    <input type="file" name="uploadfile" id="form3Example1cg"
+                                        class="form-control form-control-lg">
 
-                                    </div>
+                                </div>
 
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example3cg">Your Email</label>
-                                        <input type="email" id="form3Example3cg" class="form-control form-control-lg"
-                                            name="email" value="<?php echo $details['email'] ?>" />
-                                        <span class="error"><?php echo $emailErr; ?></span>
-                                    </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example3cg">Your Email</label>
+                                    <input type="email" id="form3Example3cg" class="form-control form-control-lg"
+                                        name="email" value="<?php echo $details['email'] ?>" />
+                                    <span class="error"><?php echo $emailErr; ?></span>
+                                </div>
 
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example4cdg">Address</label>
-                                        <input type="text" id="form3Example4cdg" class="form-control form-control-lg"
-                                            name="address" value="<?php echo $details['address'] ?>" />
-                                        <span class="error"><?php echo $addressErr; ?></span>
-                                    </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example4cdg">Address</label>
+                                    <input type="text" id="form3Example4cdg" class="form-control form-control-lg"
+                                        name="address" value="<?php echo $details['address'] ?>" />
+                                    <span class="error"><?php echo $addressErr; ?></span>
+                                </div>
 
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="form3Example4cdg">Phone Number</label>
-                                        <input type="number" id="form3Example4cdg" class="form-control form-control-lg"
-                                            name="phone" value="<?php echo $details['phone'] ?>" />
-                                        <span class="error"><?php echo $phoneErr; ?></span>
-                                    </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form3Example4cdg">Phone Number</label>
+                                    <input type="number" id="form3Example4cdg" class="form-control form-control-lg"
+                                        name="phone" value="<?php echo $details['phone'] ?>" />
+                                    <span class="error"><?php echo $phoneErr; ?></span>
+                                </div>
 
-                                    <br>
-                                    <div class="d-flex justify-content-center">
-                                        <button type="submit" name="update"
-                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Update</button>
-                                    </div>
-                                    <div>
-                                        <a href="passwordupdate.php?id=<?php echo $details['id'] ?>">Update
-                                            password</a>
-                                    </div>
-                                </form>
-                            </div>
+                                <br>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" name="update"
+                                        class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Update</button>
+                                </div>
+                                <div>
+                                    <a href="password_update.php?id=<?php echo $details['id'] ?>">Update
+                                        password</a>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+  </section>
 
+  <?php 
+  include('footer.php');
+  }
+  ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
-
-<?php }?>

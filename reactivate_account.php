@@ -2,11 +2,8 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -18,16 +15,14 @@
 </head>
 
 <body>
-
-
     <?php
     // error_reporting(0);
 // session_start();
 include ('config.php');
-// if(isset($_SESSION['logined'])){
-    // header('location:alldata.php');
-// }ssss
-// else{
+if(isset($_SESSION['logined'])){
+    header('location:home_page.php');
+}
+else{
 // Define variables to store form data and error messages
 $email = $password ='';
 $emailErr =$passwordErr= '';
@@ -65,82 +60,48 @@ $emailErr =$passwordErr= '';
     $sql="SELECT * FROM `register` WHERE `email`='$email' &&  `password`= md5('$password') && `status`='1'";
 
     $result = mysqli_query($conn,$sql);
-    // print_r($result);
-    // $session_id="";
-    // foreach($result as $value){
-    // print_r($value['id']);
-    //   $session_id=$value['id'];
     $res=mysqli_num_rows($result);
-    // echo $res;
-    // die;
     if($res>0)
     {
-    // $_SESSION['logined']=$session_id;
-    // echo ("<script LANGUAGE='JavaScript'>
-    // window.alert('Logined Successfully');
-    // window.location.href='alldata.php';
-    // </script>");
-    $recover_account= "UPDATE `register` SET `status` = 0 WHERE `email`=`$email`" ; 
+    $recover_account= "UPDATE `register` SET `status`= '0' WHERE `email`='$email'"; 
     $recover_account_query = mysqli_query($conn,$recover_account);
-    // $rest=mysqli_num_rows($recover_account_query);
-    $final=mysqli_fetch_array($recover_account_query);
-    print_r($final);
-    die;
-        if($rest){
+    if($recover_account_query){
     echo "<script>";
     echo " Swal.fire({
         icon: 'success',
-        title: 'Success',
+        title: 'Success',  
         text: 'Recovered successfully!',
         showConfirmButton: false,
         timer: 2500
       }).then(() => {
-        window.location.href = 'alldata.php';
+        window.location.href = 'login-form.php';
       })";
-
       echo "</script>";
+    } 
+    else {
+        echo "<script>";
+        echo " Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Unable to recover!',
+            showConfirmButton: false,
+            timer: 2500
+            }).then(() => {
+            window.location.href = 'reactivate_account.php';
+            })";
+            echo "</script>";
     }
-}
+    }
     else 
     {
-        $passwordErr="old password and email dont match";
+        $passwordErr="Wrong email and password";
     }
-    // else{
-    //     // $passwordErr= "please enter a valid email and password";
-    //     echo "<script>";
-    //     echo " Swal.fire({
-    //         icon: 'error',
-    //         title: 'Login',
-    //         text: 'Login Failed!',
-    //         showConfirmButton: false,
-    //         timer: 2500
-    //       }).then(() => {
-    //         window.location.href = 'login-form.php';
-    //       })";
-    //       echo "</script>";
-    // }
-  }
-}
-// }
+    }
+    }
+    }
 // }
 ?>
-
-
-<!-- <!doctype html>
-<html lang="en">
-  <head>
- 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
-    <title>Recover Account</title>
-  </head>
-  <body> -->
-  <div class="container">
+    <div class="container">
         <div class="row justify-content-center custom-margin">
             <div class="col-md-4 col-sm-6 col-lg-6">
 
@@ -171,8 +132,8 @@ $emailErr =$passwordErr= '';
                         class="btn btn-success btn-lg btn-block shadow-sm">Login</button>
                 </form>
 
-                <p class="text-center text-muted mt-5 mb-0">Don't Have Account? <a href="register-form.php"
-                      >Register here</a></p>
+                <p class="text-center text-muted mt-5 mb-0">Don't Have Account? <a href="register-form.php">Register
+                        here</a></p>
 
             </div>
         </div>
@@ -187,7 +148,6 @@ $emailErr =$passwordErr= '';
 </body>
 
 </html>
-
 
 <script>
 function myFunction() {

@@ -20,7 +20,7 @@
     <?php
 session_start();
 if(isset($_SESSION['logined'])){
-  header('location:alldata.php');
+  header('location:home_page.php');
 }
 
 include ('config.php');
@@ -54,8 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (empty($_FILES['uploadfile']['name'])) {
     $fileErr = 'File upload is required';
   } else {
-    // Perform file upload validations as per your requirements
-    // ...
+$allowedExtensions = ['jpeg', 'jpg', 'avif', 'png'];
+$uploadedFile = $_FILES['uploadfile']['name']; // Assuming you are using a file upload form
+$fileExtension = strtolower(pathinfo($uploadedFile, PATHINFO_EXTENSION));
+
+if (!in_array($fileExtension, $allowedExtensions)) {
+    // File extension is not allowed
+    $fileErr =  "Invalid file type. Only JPEG, AVIF, and PNG images are allowed.";
+    // You can choose to exit the script or take other appropriate action
+}
   }
 
   // Validate phone
@@ -116,11 +123,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $email_sql = "SELECT * FROM `register` WHERE `email`='$email'"; 
       $run = mysqli_query($conn,$email_sql);
       $count = mysqli_num_rows($run);
-
+      $status=mysqli_fetch_assoc($run);
+      $stat= $status['status'];
       if($count>0)
       {
-      $emailErr="Email already exists";
-      echo "<a href='reactiveaccount.php' target='_blank'>Click here to recover account</a>";
+        if($stat==0){
+      $emailErr="Email already exists please try another email";
+        }
+        else{
+          $emailErr = "Email already exists" . " <a href='reactivate_account.php' target='_blank'>Click here to recover account</a>";
+        }
       }
       else
       {
@@ -178,12 +190,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
               echo "</script>";
         }
-  }
-}
+    }
+    }
 
-  }
-}
-?>
+    }
+    }
+    ?>
 
 
 
@@ -282,7 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
 
                                     <p class="text-center text-muted mt-5 mb-0">Have already an account? <a
-                                            href="login-form.php" class="fw-bold text-body"><u>Login here</u></a></p>
+                                            href="login-form.php">Login here</a></p>
 
                                 </form>
                             </div>
